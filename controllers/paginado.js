@@ -2,11 +2,11 @@ const { pool } = require('../database/config');
 
 const obtenerPaginasPorUsuario = async (req, res) => {
 
-    const { gestor } = req.query;
+    const { gestorId } = req.query;
 
     try {
-        const query = 'SELECT CEIL(COUNT(*)::INTEGER / 10.0) * 1 AS paginas FROM ctl_padron WHERE gestor = $1';
-        const values = [ gestor ];
+        const query = 'SELECT CEIL(COUNT(*)::INTEGER / 10.0) * 1 AS paginas FROM ctl_padron WHERE gestorId = $1';
+        const values = [ gestorId ];
 
         const resultado = await pool.query(query, values);
 

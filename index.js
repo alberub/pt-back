@@ -19,11 +19,15 @@ probarConexion();
 
 app.use(express.static('public')); 
 
+app.use( '/api/login', require('./routes/auth') );
+
 app.use( '/api/padron', require('./routes/padron') );
 
 app.use( '/api/gestion', require('./routes/gestion') );
 
 app.use( '/api/paginado', require('./routes/paginado') );
+
+app.use( '/api/usuarios', require('./routes/usuarios') );
 
 // app.use( '/api/followings', require('./routes/followings') )
 

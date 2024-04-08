@@ -9,7 +9,7 @@ const router = Router();
 
 // router.get( '/', obtenerDatos );
 
-router.post('/gestion', insertarGestion );
+router.post('/crear', validarJWT, insertarGestion );
 
 // router.post('/gestion', [ validarCampos,validarJWT ], getSubscribers );
 
