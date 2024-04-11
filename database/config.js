@@ -1,12 +1,20 @@
 const { Pool } = require('pg');
 
-// Configuración de la conexión a la base de datos sin usuario ni contraseña
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'practicas',
-    port: 5432,
-  });
+  user: 'Alberto',
+  host: 'postgresql-168844-0.cloudclusters.net',
+  database: 'crm',
+  password: 'Brios9870$',    
+  port: 10029
+});
+
+// Configuración de la conexión a la base de datos sin usuario ni contraseña
+// const pool = new Pool({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'practicas',  
+//     port: 5432
+//   });
 
 // Función para probar la conexión y hacer una consulta simple
 async function probarConexion() {

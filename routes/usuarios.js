@@ -7,7 +7,7 @@ const { crearUsuario, validar } = require('../controllers/usuarios');
 
 const router = Router();
 
-router.post('/nuevo', crearUsuario );
+router.post('/nuevo', validarJWT, crearUsuario );
 
 // router.post('/validar', validar );
 

@@ -18,7 +18,7 @@ const login = async( req, res ) => {
             if (usuarioDB.rows.length === 0) {
                 return res.status(400).json({
                     ok: false,
-                    errorMessage: 'El usuario y contraseña son incorrectos'
+                    errorMessage: 'El usuario y/o contraseña son incorrectos'
                 });
             };
 
@@ -28,7 +28,7 @@ const login = async( req, res ) => {
             if( !esContraseñaValida ) {
                 return res.status(404).json({
                     ok: false,
-                    errorMessage: 'El usuario y contraseña son incorrectos'
+                    errorMessage: 'El usuario y/o contraseña son incorrectos'
                 });
             }
             
