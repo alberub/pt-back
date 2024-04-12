@@ -40,5 +40,5 @@ app.get( '*', ( req, res ) => {
 });
 
 server.listen( process.env.PORT, () => {
-    console.log('Servidor ( server - socket io ) corriendo en puerto' + process.env.PORT);
+    console.log('Servidor ( server - socket io ) corriendo en puerto ' + process.env.PORT);
 });

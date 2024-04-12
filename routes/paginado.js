@@ -7,6 +7,6 @@ const { obtenerPaginasPorUsuario } = require('../controllers/paginado');
 
 const router = Router();
 
-router.get('/paginas', obtenerPaginasPorUsuario );
+router.get('/paginas', validarJWT, obtenerPaginasPorUsuario );
 
 module.exports = router;

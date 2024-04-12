@@ -15,8 +15,6 @@ router.post('/',
     login
 );
 
-// router.post('/', login )
-
 router.get('/renew', validarJWT ,renewToken) 
 
 

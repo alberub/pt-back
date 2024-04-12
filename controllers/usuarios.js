@@ -55,6 +55,59 @@ const crearUsuario = async (req, res) => {
 
 }
 
+const esAdmin = async(req, res) => {
+
+    const { gestorId } = req.body;
+
+    try {
+        
+        const query = 'SELECT id FROM cat_gestores WHERE $1 IN ( 1, 2 )';
+        const values = [gestorId]
+        
+        const result = await pool.query(query, values);
+        if (result.rows.length === 0) {
+            return res.status(401).json({
+                ok: false,
+                errorMessage: 'Sin autorización'
+            });
+        }
+
+        res.json({
+            ok: true
+        })
+
+    } catch (error) {
+        res.status(500).json({                
+            ok:false,
+            errorMessage:'Error inesperado, hable con el administrador'
+        });
+    }
+
+}
+
+const rutas = async(req, res) => {
+
+    try {
+
+        const query = 'SELECT * FROM cat_rutas';
+        const rutas = await pool.query(query);
+
+        res.json({
+            ok: true,
+            datos: rutas.rows
+        })
+        
+    } catch (error) {
+        res.status(500).json({                
+            ok:false,
+            errorMessage:'Error inesperado, hable con el administrador'
+        });
+    }
+
+}
+
 module.exports = {
-    crearUsuario
+    crearUsuario,
+    esAdmin,
+    rutas
 }

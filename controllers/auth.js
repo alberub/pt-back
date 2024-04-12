@@ -33,7 +33,7 @@ const login = async( req, res ) => {
             }
             
             // Generar JWT
-            const token = await generarJWT( usuarioDB.rows[0].id, usuarioDB.rows[0].usuario );
+            const token = await generarJWT( usuarioDB.rows[0].id );
 
             res.json({
                 ok: true,                
@@ -72,6 +72,6 @@ const renewToken = async( req, res = response ) => {
 
 
 module.exports = {
-    login,
+    login,    
     renewToken
 }
