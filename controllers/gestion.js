@@ -24,7 +24,31 @@ const insertarGestion = async (req, res) => {
     }
 };
 
+const estatusGestiones = async(req, res) => {
+
+    try {
+        const query = `SELECT
+                            COUNT(*) AS total_gestiones,
+                            COUNT(CASE WHEN simpatizante = true THEN 1 END) AS total_simpatizantes,
+                            COUNT(CASE WHEN estatus IN ('Contesta', 'Indeciso', 'Quiere visita de Maderito', 'Número equivocado', 'No le interesa', 'No es de Monterrey') THEN 1 END) AS total_estatus_especificos
+                       FROM ctl_gestiones;`
+
+        const result = await pool.query(query);
+
+        res.json({
+            ok: true,
+            datos: result.rows
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            errorMessage: error.message
+        });
+    }
+}
 
 module.exports = {
-    insertarGestion
+    insertarGestion,
+    estatusGestiones
 }

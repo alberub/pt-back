@@ -55,6 +55,29 @@ const crearUsuario = async (req, res) => {
 
 }
 
+const obtenerUsuarios = async(req, res) => {
+
+    try {
+        
+        const query = 'SELECT id, usuario, fecha_creacion FROM cat_gestores';
+        const result = await pool.query(query);
+
+        res.json({
+            ok: true,
+            datos: result.rows
+        })
+
+    } catch (error) {
+        res.json({
+            ok: false,
+            errorMessage: error.message
+        })
+    }
+
+
+
+}
+
 const esAdmin = async(req, res) => {
 
     const { gestorId } = req.body;
@@ -108,6 +131,7 @@ const rutas = async(req, res) => {
 
 module.exports = {
     crearUsuario,
+    obtenerUsuarios,
     esAdmin,
     rutas
 }
