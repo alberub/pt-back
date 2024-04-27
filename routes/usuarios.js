@@ -1,20 +1,16 @@
 const { Router } = require('express');
-const { check } = require('express-validator');
-const { ValidarAdmin } = require('../middlewares/validar-admin');
-
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { crearUsuario, validar, esAdmin, rutas, obtenerUsuarios } = require('../controllers/usuarios');
+
+const { crearUsuario, obtenerUsuarios, obtenerRoles, actualizarUsuario } = require('../controllers/UsuariosController');
 
 const router = Router();
 
-router.post('/nuevo', validarJWT, crearUsuario );
+router.post('/crearUsuario', crearUsuario);
 
-router.post('/usuarios', validarJWT, ValidarAdmin, obtenerUsuarios);
+router.get('/', validarJWT, obtenerUsuarios);
 
-router.post('/admin', validarJWT, esAdmin );
+router.get('/roles', obtenerRoles);
 
-router.post('/rutas', validarJWT, ValidarAdmin, rutas);
-
-// router.post('/validar', validar );
+router.put('/actualizar', validarJWT, actualizarUsuario);
 
 module.exports = router;

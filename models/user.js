@@ -1,67 +1,40 @@
-// const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-// const UserSchema = Schema({
+const UserSchema = Schema({
 
-//     firstName: {
-//         type: String,
-//         required: true
-//     },
-//     lastName:{
-//         type: String
-//     },
-//     username:{
-//         type: String,
-//         required: true,
-//         unique: true
-//     },
-//     email: {
-//         type: String,
-//         required: true,
-//         unique: true
-//     },
-//     password: {
-//         type: String,
-//         required: true
-//     },
-//     bio:{
-//         type: String
-//     },
-//     location:{
-//         type: String
-//     },
-//     website:{
-//         type: String
-//     },
-//     img: { 
-//         type: String
-//     },
-//     imgPort:{
-//         type: String
-//     },
-//     createdAt:{
-//         type: Date,
-//         default: new Date()
-//     },
-//     followers:[{
-//         type: Schema.Types.ObjectId,
-//         ref:"User"
-//     }],
-//     followings:[{
-//         type: Schema.Types.ObjectId,
-//         ref:"User"
-//     }],
-//     privacity: {
-//         type: String,
-//         default: 'public'
-//     }
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    role: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true
+    },
+    fechaCreacion: { 
+        type: Date, 
+        default: Date.now 
+    }
 
-// });
+});
 
-// UserSchema.method('toJSON', function() {
-//     const { __v, _id, password, ...object } = this.toObject();
+UserSchema.method('toJSON', function(){
+    
+    const { __v, _id, ...object } = this.toObject();
 
-//     object.uid = _id;
-//     return object;
-// })
+    object.uid = _id;
+    return object;
 
-// module.exports = model('User', UserSchema);
+});
+
+module.exports = model('User', UserSchema);
