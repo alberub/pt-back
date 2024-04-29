@@ -1,6 +1,9 @@
 const express = require('express');
 require( 'dotenv' ).config();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger');
+
 const path = require('path');
 const cors = require('cors');
 
@@ -9,6 +12,8 @@ const { socketController } = require('./sockets/sockets.controller')
 
 const app = express();
 const server = require('http').createServer( app );
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const io = require('socket.io')(server,{
     cors:{

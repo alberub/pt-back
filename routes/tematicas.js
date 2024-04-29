@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const expressFileUpload = require('express-fileupload');
 const { validarJWT } = require('../middlewares/validar-jwt');
+const { validarRol } = require('../middlewares/validar-rol');
 
 const { crearTematica, obtenerTematicas, buscarTematica, obtenerTematicaPorId } = require('../controllers/TematicaController');
 
@@ -11,7 +12,7 @@ router.use( expressFileUpload({
     tempFileDir: '/tmp/'
 }));
 
-router.post('/crearTematica', validarJWT, crearTematica);
+router.post('/crearTematica', validarJWT, validarRol('admin'), crearTematica);
 
 router.get('/', obtenerTematicas);
 

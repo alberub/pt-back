@@ -5,8 +5,7 @@ const login = async(req, res) => {
 
     try {
 
-        const { username, email } = req.body;
-        // const existeUsuario = await User.find({ username, email });
+        const { username, email } = req.body;        
         const existeUsuario = await User.findOne({
             $and: [{ username: username }, { email: email }]
         });
@@ -22,7 +21,6 @@ const login = async(req, res) => {
 
         res.json({
             ok: true,
-            usuario: existeUsuario,
             token
         })
         
@@ -35,6 +33,40 @@ const login = async(req, res) => {
 
 }
 
+const renewToken = async( req, res ) => {
+
+    try {
+        
+        const uid = req.uid;
+
+        // Generar JWT
+        const token = await generarJWT( uid );
+
+        const usuario = await User.findOne({ _id: uid });
+
+        if (!usuario) {
+            return res.json({
+                ok: false, 
+                error: 'Ha ocurrido un error al realizar la petición.'
+            })
+        }
+
+        res.json({
+            ok: true,
+            token,
+            usuario
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false, 
+            error: error.message
+        })
+    }
+
+}
+
 module.exports = {
-    login
+    login,
+    renewToken
 }

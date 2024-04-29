@@ -232,11 +232,34 @@ const obtenerContenidoTexto = async( req, res ) => {
 
 }
 
+const eliminarContenido = async( req, res ) => {
+
+    try {
+
+        const id = req.params.uid;
+
+        const contenido = await Contenido.findByIdAndDelete({ _id: id });
+
+        res.json({
+            ok: true,
+            data: contenido
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        })
+    }
+
+}
+
 module.exports = {
     actualizarContenido,
     buscarContenido,
     consultaContenido,
     crearContenido,
+    eliminarContenido,
     obtenerContenido,
     obtenerContenidoPorId,
     obtenerContenidoTexto

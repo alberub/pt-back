@@ -63,7 +63,14 @@ const actualizarUsuario = async(req, res) => {
 
     try {
 
-        await User.findByIdAndUpdate( uid, { role: role } );
+        const usuario = await User.findByIdAndUpdate( uid, { role: role } );
+
+        if(!usuario){
+            return res.status(404).json({
+                ok: false, 
+                error: 'Datos de entrada inválidos o usuario no encontrado'
+            });
+        }
 
         res.json({
             ok: true,

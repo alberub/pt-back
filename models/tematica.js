@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const TematicaSchema = Schema({
     nombre: { type: String, required: true, unique: true, lowercase: true },    
-    permite: [{ type: String, required: true, lowercase: true }],
+    permite: [{ type: Schema.Types.ObjectId, ref: "Categoria" , required: true }],
     portada:{ type: String, required: true }
 });
 

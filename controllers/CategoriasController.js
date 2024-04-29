@@ -1,4 +1,5 @@
 const Categoria = require('../models/categoria');
+const Tematica = require('../models/tematica');
 
 const cloudinary = require('cloudinary').v2
 cloudinary.config( process.env.CLOUDINARY_URL ); 
@@ -57,23 +58,6 @@ const obtenerCategorias = async(req, res) => {
             ok: true,
             data: categorias
         })
-        
-    } catch (error) {
-        res.status(500).json({
-            ok: false,
-            error: error.message
-        })
-    }
-
-}
-
-const obtenerCategoriasPorTematica = async(req, res) => {
-
-    try {
-
-        const tematicaId = req.params.tematicaId;
-
-        
         
     } catch (error) {
         res.status(500).json({
@@ -146,6 +130,5 @@ module.exports = {
     crearCategoria,
     obtenerCategorias,
     obtenerCategoriaByName,
-    obtenerCategoriaPorId,
-    obtenerCategoriasPorTematica
+    obtenerCategoriaPorId
 }

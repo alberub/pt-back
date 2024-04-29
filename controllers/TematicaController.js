@@ -1,4 +1,5 @@
 const Tematica = require('../models/tematica');
+const Contenido = require('../models/contenido');
 
 const cloudinary = require('cloudinary').v2
 cloudinary.config( process.env.CLOUDINARY_URL ); 
@@ -83,18 +84,33 @@ const obtenerTematicaPorId =  async(req, res) => {
 
       const id = req.params.id;
 
-      const tematica = await Tematica.find({ _id: id });
+      const tematica = await Tematica.findById( id )
+                                     .populate('permite', 'icono nombre uid')
+                                     .exec()
 
       if (!tematica) {
         return res.status(404).json({
-          error: 'No se ha encontrado la temática.'
+          error: `No se ha encontrado la temática con id ${id}`
         })
       }
+    
+    const conteo = await Contenido.aggregate([
+      { $match: { tematica: tematica._id } },
+      { $group: { _id: "$categoria", count: { $sum: 1 } } }
+    ]);
+    
+    const categoriasConteo = tematica.permite.map(cat => ({
+      categoria: cat,
+      count: (conteo.find(c => c._id.toString() === cat._id.toString()) || { count: 0 }).count
+    }));
 
-      res.json({
-        ok: true,
-        data: tematica
-      })
+    res.json({
+      ok: true,
+      data: {
+        tematica: tematica,
+        conteo: categoriasConteo
+      }
+      });
       
     } catch (error) {
       res.status(500).json({
