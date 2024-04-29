@@ -2,44 +2,49 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { Error } = require('mongoose');
 
-const validarJWT = ( req, res, next ) => {
+const validarJWT = (req, res, next) => {
+    // Nota: 'Authorization' es el nombre del encabezado HTTP
+    const authHeader = req.header('Authorization');
+    
+    // Se espera que el encabezado de autorización tenga el formato "Bearer token"
+    if (!authHeader || !authHeader.startsWith('Bearer ')){
+        return res.status(401).json({
+            ok: false,
+            msg:'No hay token en la peticion'
+        });
+    }
 
-    const token = req.header('x-token');
+    // Separar el prefijo "Bearer " del token
+    const token = authHeader.split(' ')[1];
 
-     if (!token){
-         return res.status(401).json({
-             ok: false,
-             msg:'No hay token en la peticion'
-         });
-     }
-
-     try {
-
-        const { uid } = jwt.verify( token, process.env.JWT_SECRET );
-
+    try {
+        const { uid } = jwt.verify(token, process.env.JWT_SECRET);
         req.uid = uid;
-
         next();
-         
-     } catch (error) {
-
+    } catch (error) {
         return res.status(401).json({
             ok:false,
-            error:'Token invalido'
+            msg:'Token inválido'
         });
-         
-     }
+    }
+};
 
-}
 
-const verificarAdminRole = async(req, res, next) => {
-
-    const token = req.header('x-token');
+const verificarAdminRole = async(req, res, next) => {   
 
     try {
 
-        const { uid } = jwt.verify( token, process.env.JWT_SECRET);
-        const user = await User.findById( uid );
+        const authHeader = req.header('Authorization');
+
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'No hay token en la petición' });
+        }
+
+        const token = authHeader.split(' ')[1];
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.uid
+        const user = await User.findById( userId );
 
         if (!user) {
             return res.status(401).json({

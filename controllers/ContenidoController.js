@@ -226,8 +226,10 @@ const obtenerContenidoTexto = async( req, res ) => {
 
         res.send(data);
     } catch (error) {
-        console.error('Error al recuperar el archivo de texto:', error);
-        res.status(500).send('Error al recuperar el archivo de texto');
+        res.status(500).json({
+            ok: false,
+            error: 'Error al recuperar el archivo de texto,'
+        });
     }
 
 }

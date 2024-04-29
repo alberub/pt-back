@@ -8,7 +8,7 @@ const router = Router();
 
 /**
  * @swagger
- * /crearUsuario:
+ * /api/usuarios/crearUsuario:
  *   post:
  *     summary: Crea un nuevo usuario
  *     tags: [Usuarios]
@@ -54,7 +54,7 @@ router.post('/crearUsuario', validarJWT, validarRol('admin'), crearUsuario);
  *     summary: Obtiene una lista de todos los usuarios
  *     tags: [Usuarios]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de usuarios obtenida correctamente
@@ -100,10 +100,10 @@ router.post('/crearUsuario', validarJWT, validarRol('admin'), crearUsuario);
  *         email: juanperez@example.com
  *         rol: admin
  *   securitySchemes:
- *     bearerAuth:
+ *     BearerAuth:
  *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *       scheme: Bearer
+ *       BearerFormat: JWT
  */
 
 
@@ -113,12 +113,12 @@ router.get('/roles', validarJWT, validarRol('admin'), obtenerRoles);
 
 /**
  * @swagger
- * /actualizar:
+ * /api/usuarios/actualizar:
  *   put:
  *     summary: Actualiza el rol de un usuario
  *     tags: [Usuarios]
  *     security:
- *       - x-token: []
+ *       - Bearer: []
  *     requestBody:
  *       required: true
  *       content:
@@ -171,10 +171,10 @@ router.get('/roles', validarJWT, validarRol('admin'), obtenerRoles);
  *                 error:
  *                   type: string
  *   securitySchemes:
- *     bearerAuth:
+ *     BearerAuth:
  *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *       scheme: Bearer
+ *       BearerFormat: JWT
  */
 
 

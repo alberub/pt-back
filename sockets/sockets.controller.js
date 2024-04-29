@@ -2,12 +2,14 @@ const { comprobarJWT } = require("../helpers/jwt");
 
 const socketController = async(socket, io) => {
 
-    // const user = await comprobarJWT( socket.handshake.headers['x-token'] );    
+    // const authHeader = req.header('Authorization');
 
-    // if( !user ){        
-    //     console.log('no hay user');
-    //     return socket.disconnect();
+    // if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    //     return res.status(401).json({ message: 'No hay token en la petición' });
     // }
+
+    // const token = authHeader.split(' ')[1];
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     
     socket.on('contenido-creado', (data) => {
